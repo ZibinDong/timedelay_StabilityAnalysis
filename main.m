@@ -1,14 +1,14 @@
 clc;clear
-% »ù´¡±äÁ¿³õÊ¼»¯
-A = input("A = ");
-B = input("B = ");
+% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
+A = input('A = ');
+B = input('B = ');
 n = size(A, 1);
 syms s t x T f(s,t) g(s,T);
 f = exp(-s*t);
 g = (1-T*s)/(1+T*s);
 I = eye(n);
 
-% ¼ÆËãÌØÕ÷·½³Ì£¬±£´æaÏµÊý
+% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½aÏµï¿½ï¿½
 charac = det(s*I - A - B*x);
 params_a = coeffs(charac, x);
 b_charac = subs(charac, x, g);
@@ -16,25 +16,25 @@ b_charac = collect(b_charac, s);
 b_charac = numden(b_charac);
 b_charac = collect(b_charac, s);
 
-% ¼ÆËãTck
+% ï¿½ï¿½ï¿½ï¿½Tck
 disp("counting Tck");
 [Tck,NSs] = count_T(b_charac, n);
 m = length(Tck);
 
-% Çó½âwck
+% ï¿½ï¿½ï¿½wck
 disp("counting wck");
-wck = [];
+wck = rand(1,m);
 for k = 1:m
     roots_vector = roots(sym2poly(subs(b_charac, T, Tck(k))));
     for j = 1:length(roots_vector)
-        if abs(real(roots_vector(j))) < 0.0001
-            wck = [wck,abs(imag(roots_vector(j)))];
+        if abs(real(roots_vector(j))) < 0.001
+            wck(k) = abs(imag(roots_vector(j)));
             break
         end
     end
 end
 
-% ¼ÆËã1ÒÔÄÚµÄÓëTck¹ØÁªµÄtkl
+% ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Tckï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tkl
 disp("counting tkl");
 tkl = [];
 for k = 1:m
@@ -61,14 +61,14 @@ for k = 1:m
 end
 m = length(Tck);
 
-% ºÏ²¢³É±í¸ñ²¢°´ÕÕtkl½øÐÐÅÅÐò
+% ï¿½Ï²ï¿½ï¿½É±ï¿½ñ²¢°ï¿½ï¿½ï¿½tklï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 sheet = [tkl', wck', Tck'];
 sheet = sortrows(sheet,1);
 tkl = sheet(:,1);
 wck = sheet(:,2);
 Tck = sheet(:,3);
 
-% ¼ÆËãRT
+% ï¿½ï¿½ï¿½ï¿½RT
 RTs = [];
 RTs_o = [];
 for k = 1:m
@@ -79,7 +79,7 @@ for k = 1:length(Tck_o)
 end
 sheet = [tkl, RTs, wck, Tck];
 
-% ¼ÆËãNU(0)
+% ï¿½ï¿½ï¿½ï¿½NU(0)
 NU_0 = 0;
 t_charac = subs(charac, x, f);
 t_charac = subs(t_charac, t, 0);
@@ -90,7 +90,7 @@ for j = 1:length(roots_0)
     end
 end
 
-% ¼ÆËãNU_t
+% ï¿½ï¿½ï¿½ï¿½NU_t
 NU_t = [];
 for k = 1:length(tkl)
     NU_t = [NU_t; count_NU(tkl(k)+0.0001, wck_o, tkl_o,RTs_o,NU_0)];
