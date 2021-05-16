@@ -1,6 +1,6 @@
 function [routh_list] = Routh(chara_equ)
-%UNTITLED 此处显示有关此函数的摘要
-%   此处显示详细说明
+%UNTITLED 锟剿达拷锟斤拷示锟叫关此猴拷锟斤拷锟斤拷摘要
+%   锟剿达拷锟斤拷示锟斤拷细说锟斤拷
 n = length(chara_equ);
 chara_equ = reshape(chara_equ, 1 ,n);
 if mod(n,2) == 0
